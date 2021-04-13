@@ -1,4 +1,4 @@
-import backup
+import computorv1
 
 test = "5 * X^0 + 4 * X^1 - 9.3 * X^2 = -1 * X^0 + 345 * X^2 - 51*X^2 + 912.1*X^1 + 5 * X^1 - 3 * X^1 + 0 * X^1"
 test_1 = "5 * X^0 + 4 * X^1 - 9.3 * X^2 = 1 * X^0"
@@ -9,54 +9,63 @@ test_5 = "2 * X^2 + 4 * X^1 + 2 * X^0 = 0"
 test_6 = "8 * X^2 + 4 * X^1 + 2 * X^0 = 0"
 test_7 = "54 * x^0 = 42 * x^0"
 test_8 = "5 * X^2 - 14 * X^1 + 17 * X^0 = 0"
-test_9 = "133 * X^1 + 15 * X^2 - 11 * X^0 + 123 * X^0 = -12 * X^0 + 22 * X^2 + 598*X^1 * X^2"
+test_9 = "133 * X^1 + 15 * X^2 - 11 * X^0 + 123 * X^0 = -12 * X^0 + 22 * X^2 + 598*X^1 + 2 * X^2"
 test_10 = "-15 * X^1 + 52 * X^2 -11 * X^2 - 14 * X^0 - 145 * X^0 + 108 * X^2 -12 * X^1 = 98 * X^2 + 259 * X^1 + 12 * X^1 -9879 * X^0 + 3908 * X^1"
 test_11 = "15 * X^3 + 1 * X^2 + 12 * X^0 = 0"
 test_12 = "15 * X^0000014 + 1 * X^21412 + 12 * X^4214142210=5"
 test_13 = "-1 * X^0 = 1 * X^1 - 2 * X^2"
-test_14 = ""
-test_15 = ""
-test_16 = ""
+test_14 = "-1 + 22*X - X - 333*X^0 + 4444*X^1 + 55555*X^2 + 666666*X^2 - 7 = 5"
+test_15 = "0 + 1*X^0 + 0*X + X + 1*X^1 + 3*X^2 + 4*X^3 + 5*X^4 = 0"
+test_16 = "4 + 4 + 4 + 4*x^0 + x + 3*x + 4*X^1 + 5*x^2 = -4*x + 7*x^2"
 
 print("\n\033[33m---------------------------------------------------------\n\033[0m")
-print("\033[32mTEST: " + test + "\033[0m")
-backup.core(test)
+print("\033[32mTEST: " + test + "\033[0m\n")
+computorv1.core(test)
 print("\n\033[33m---------------------------------------------------------\n\033[0m")
-print("\033[32mTEST: " + test_1 + "\033[0m")
-backup.core(test_1)
+print("\033[32mTEST: " + test_1 + "\033[0m\n")
+computorv1.core(test_1)
 print("\n\033[33m---------------------------------------------------------\n\033[0m")
-print("\033[32mTEST: " + test_2 + "\033[0m")
-backup.core(test_2)
+print("\033[32mTEST: " + test_2 + "\033[0m\n")
+computorv1.core(test_2)
 print("\n\033[33m---------------------------------------------------------\n\033[0m")
-print("\033[32mTEST: " + test_3 + "\033[0m")
-backup.core(test_3)
+print("\033[32mTEST: " + test_3 + "\033[0m\n")
+computorv1.core(test_3)
 print("\n\033[33m---------------------------------------------------------\n\033[0m")
-print("\033[32mTEST: " + test_4 + "\033[0m")
-backup.core(test_4)
+print("\033[32mTEST: " + test_4 + "\033[0m\n")
+computorv1.core(test_4)
 print("\n\033[33m---------------------------------------------------------\n\033[0m")
-print("\033[32mTEST: " + test_5 + "\033[0m")
-backup.core(test_5)
+print("\033[32mTEST: " + test_5 + "\033[0m\n")
+computorv1.core(test_5)
 print("\n\033[33m---------------------------------------------------------\n\033[0m")
-print("\033[32mTEST: " + test_6 + "\033[0m")
-backup.core(test_6)
+print("\033[32mTEST: " + test_6 + "\033[0m\n")
+computorv1.core(test_6)
 print("\n\033[33m---------------------------------------------------------\n\033[0m")
-print("\033[32mTEST: " + test_7 + "\033[0m")
-backup.core(test_7)
+print("\033[32mTEST: " + test_7 + "\033[0m\n")
+computorv1.core(test_7)
 print("\n\033[33m---------------------------------------------------------\n\033[0m")
-print("\033[32mTEST: " + test_8 + "\033[0m")
-backup.core(test_8)
+print("\033[32mTEST: " + test_8 + "\033[0m\n")
+computorv1.core(test_8)
 print("\n\033[33m---------------------------------------------------------\n\033[0m")
-print("\033[32mTEST: " + test_9 + "\033[0m")
-backup.core(test_9)
+print("\033[32mTEST: " + test_9 + "\033[0m\n")
+computorv1.core(test_9)
 print("\n\033[33m---------------------------------------------------------\n\033[0m")
-print("\033[32mTEST: " + test_10 + "\033[0m")
-backup.core(test_10)
+print("\033[32mTEST: " + test_10 + "\033[0m\n")
+computorv1.core(test_10)
 print("\n\033[33m---------------------------------------------------------\n\033[0m")
-print("\033[32mTEST: " + test_11 + "\033[0m")
-backup.core(test_11)
+print("\033[32mTEST: " + test_11 + "\033[0m\n")
+computorv1.core(test_11)
 print("\n\033[33m---------------------------------------------------------\n\033[0m")
-print("\033[32mTEST: " + test_12 + "\033[0m")
-backup.core(test_12)
+print("\033[32mTEST: " + test_12 + "\033[0m\n")
+computorv1.core(test_12)
 print("\n\033[33m---------------------------------------------------------\n\033[0m")
-print("\033[32mTEST: " + test_13 + "\033[0m")
-backup.core(test_13)
+print("\033[32mTEST: " + test_13 + "\033[0m\n")
+computorv1.core(test_13)
+print("\n\033[33m---------------------------------------------------------\n\033[0m")
+print("\033[32mTEST: " + test_14 + "\033[0m\n")
+computorv1.core(test_14)
+print("\n\033[33m---------------------------------------------------------\n\033[0m")
+print("\033[32mTEST: " + test_15 + "\033[0m\n")
+computorv1.core(test_15)
+print("\n\033[33m---------------------------------------------------------\n\033[0m")
+print("\033[32mTEST: " + test_16 + "\033[0m\n")
+computorv1.core(test_16)
