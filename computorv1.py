@@ -1,8 +1,8 @@
 import sys
 
+VERBOSE = False
 NUMS = '1234567890'
 SYM = '*/-+^=xX.'
-VERBOSE = True
 
 def check_dot(fl):
     s = str(fl) + '\0'
@@ -51,147 +51,156 @@ def expression(string: str):
 
 
 def core(string):
-    string = expression(string) + '\0'
-    lr = []
-    dic = {}
-    if VERBOSE == True:
-        LOG = 'Summ of members: \n'
-        print("\033[34mOne side expression: \033[31m\n" + string + " = 0\033[0m")
+    try:
+        string = expression(string) + '\0'
+        lr = []
+        dic = {}
+        if VERBOSE == True:
+            LOG = 'Summ of members: \n'
+            print("\033[34mOne side expression: \033[31m\n" + string + " = 0\033[0m")
 
-    i = 0
-    while i < len(string):
-        sr = ''
-        j = i
-        while string[j] != '\0' and string[j] not in '+-':
-            sr += string[j]
-            j += 1
-        if sr != '':
-            lr.append(sr)
-        if string[j] in "+-":
-            lr.append(string[j])
-            j += 1
-        i = j
-        if string[j] == '\0':
-            break
-
-    if VERBOSE:
-        print("\033[34mDecomposition: ")
-        print("\033[31m", end='')
-        print(lr)
-        print("\033[0m", end='')
-
-    lp = []
-    next_minus = False
-    for val in lr:
         i = 0
-        while i < len(val):
-            power = ''
-            if val[i] == '-':
-                next_minus = True
-                i += 1
-                continue
-            if val[i] == 'X':
-                check = i
-                val += '\0'
-                if val[i + 1] != '\0':
-                    i += 2
-                    while val[i] != '\0':
-                        power += val[i]
-                        i += 1
+        while i < len(string):
+            sr = ''
+            j = i
+            while string[j] != '\0' and string[j] not in '+-':
+                sr += string[j]
+                j += 1
+            if sr != '':
+                lr.append(sr)
+            if string[j] in "+-":
+                lr.append(string[j])
+                j += 1
+            i = j
+            if string[j] == '\0':
+                break
+
+        if VERBOSE:
+            print("\033[34mDecomposition: ")
+            print("\033[31m", end='')
+            print(lr)
+            print("\033[0m", end='')
+
+        lp = []
+        next_minus = False
+        for val in lr:
+            i = 0
+            while i < len(val):
+                power = ''
+                if val[i] == '-':
+                    next_minus = True
+                    i += 1
+                    continue
+                if val[i] == 'X':
+                    check = i
+                    val += '\0'
+                    if val[i + 1] != '\0':
+                        i += 2
+                        while val[i] != '\0':
+                            power += val[i]
+                            i += 1
+                    else:
+                        power = '1'
+                    val = val[:check-1]
+                    if val == 'X':
+                        val = '1'
                 else:
-                    power = '1'
-                val = val[:check-1]
-                if val == 'X':
-                    val = '1'
-            else:
-                power = '0'
-            i += 1
-        if val != '-' and next_minus == True:
-            val = float(val) * -1
-            next_minus = False
-        if val != '-' and val != '+':
-            if int(power) in dic:
-                if VERBOSE:
-                    LOG += "\033[32msum: " + str(dic[int(power)]) +" + "+ str(val) + ", power - '" + power + "'" + '\033[0m || '
-                dic[int(power)] += float(val)
-            else:
-                dic.update({int(power): float(val)})
-                if VERBOSE:
-                    LOG += "\033[33mcreate: " + str(val) + ", power - '" + power + "'" + '\033[0m || '
-            lp.append(val)
+                    power = '0'
+                i += 1
+            if val != '-' and next_minus == True:
+                val = float(val) * -1
+                next_minus = False
+            if val != '-' and val != '+':
+                if int(power) in dic:
+                    if VERBOSE:
+                        LOG += "\033[32msum: " + str(dic[int(power)]) +" + "+ str(val) + ", power - '" + power + "'" + '\033[0m || '
+                    dic[int(power)] += float(val)
+                else:
+                    dic.update({int(power): float(val)})
+                    if VERBOSE:
+                        LOG += "\033[33mcreate: " + str(val) + ", power - '" + power + "'" + '\033[0m || '
+                lp.append(val)
 
-    if VERBOSE:
-        print("\033[34mSecond decomposition: \033[31m")
-        print(lp)
-        print("\033[34m" + LOG)
-        print("\033[34mSummed members key=power, value=value: \033[31m")
-        print(dic)
-        print("\033[0m")
+        if VERBOSE:
+            print("\033[34mSecond decomposition: \033[31m")
+            print(lp)
+            print("\033[34m" + LOG)
+            print("\033[34mSummed members key=power, value=value: \033[31m")
+            print(dic)
+            print("\033[0m")
 
-    reduced_form = 'Reduced form: '
-    keys_dic = sorted(dic.keys(), reverse=True)
-    for key in keys_dic:
-        if dic[key] != 0.0:
-            if keys_dic[0] != key:
-                reduced_form += " + "
-            if key == 0:
-                reduced_form += str(dic[key])
-            elif key == 1:
-                reduced_form += str(dic[key]) + "*x"
-            else:
-                reduced_form += str(dic[key]) + f"*x^{key}"
-        else:
-            dic.pop(key)
-    reduced_form += ' = 0'
-    print(reduced_form)
+        reduced_form = 'Reduced form: '
+        keys_dic = sorted(dic.keys(), reverse=True)
+        for key in keys_dic:
+            if dic[key] != 0.0:
+                if keys_dic[0] != key:
+                    if dic[key] < 0.0:
+                        reduced_form += " - "
+                        dic[key] *= -1
+                    else:
+                        reduced_form += " + "
+                if key == 0:
+                    reduced_form += str(dic[key])
+                elif key == 1:
+                    reduced_form += str(dic[key]) + "*x"
+                else:
+                    reduced_form += str(dic[key]) + f"*x^{key}"
+        print(reduced_form + ' = 0')
 
-    if 1 not in dic or 0 not in dic:
-        print("Expression is not polynomial equation.")
-        return
-    for k in keys_dic:
-        if k > 2:
-            print(f"Polynomial degree: {k}\nThe polynomial degree is strictly greater than 2, I can't solve.")
-            return
-    if 2 not in dic:
-        print ("Polynomial degree: 1\nThe solution is:")
-        x = -dic[0] / dic[1]
-        if VERBOSE and check_dot(x):
-            fraction = x.as_integer_ratio()
-            print(f"\033[34mIn irreducible fraction x = \033[31m{fraction[0]}/{fraction[1]}\033[0m")
-        print("x = %.6g" % x)
-    else:
-        print("Polynomial degree: 2")
-        discr = dic[1]**2 - 4*dic[2]*dic[0]
-        print("Discriminant = %.9g" % discr, end='. ')
-        if VERBOSE and check_dot(discr):
-            fraction = discr.as_integer_ratio()
-            print(f"\n\033[34mIn irreducible fraction Discriminant = \033[31m{fraction[0]}/{fraction[1]}\033[0m")
-        if discr > 0:
-            print("Discriminant is strictly positive, the two solutions are:")
-            x1 = (-dic[1] + discr**(1/2)) / (2 * dic[2])
-            if VERBOSE and check_dot(x1):
-                fraction = x1.as_integer_ratio()
-                print(f"\033[34mIn irreducible fraction x1 = \033[31m{fraction[0]}/{fraction[1]}\033[0m")
-            x2 = (-dic[1] - discr**(1/2)) / (2 * dic[2])
-            if VERBOSE and check_dot(x2):
-                fraction = x2.as_integer_ratio()
-                print(f"\033[34mIn irreducible fraction x2 = \033[31m{fraction[0]}/{fraction[1]}\033[0m")
-            print("x1 = %.9g \nx2 = %.9g" % (x1, x2))
-        elif discr == 0:
-            print("Discriminant is 0, the one solutions are:")
-            x = -dic[1] / (2 * dic[2])
+        for k in keys_dic:
+            if k > 2:
+                raise Exception(f"Polynomial degree: {k}\nThe polynomial degree is strictly greater than 2, I can't solve.")
+        if 1 not in dic:
+            dic.update({1: 0.0})
+        if 0 not in dic:
+            dic.update({0: 0.0})
+        if 2 in dic and dic[2] == 0.0:
+            dic.pop(2)
+        if 2 not in dic:
+            print ("Polynomial degree: 1\nThe solution is:")
+            x = -dic[0] / dic[1]
             if VERBOSE and check_dot(x):
                 fraction = x.as_integer_ratio()
-                print(f"\033[34mIn irreducible fraction x2 = \033[31m{fraction[0]}/{fraction[1]}\033[0m")
-            print("x = %.9g" % x)
+                print(f"\033[34mIn irreducible fraction x = \033[31m{fraction[0]}/{fraction[1]}\033[0m")
+            print("x = %.6g" % x)
         else:
-            print("Discriminant is strictly negative, no solutions.")
+            print("Polynomial degree: 2")
+            discr = dic[1]**2 - 4*dic[2]*dic[0]
+            print("Discriminant = %.9g" % discr, end='. ')
+            if VERBOSE and check_dot(discr):
+                fraction = discr.as_integer_ratio()
+                print(f"\n\033[34mIn irreducible fraction Discriminant = \033[31m{fraction[0]}/{fraction[1]}\033[0m")
+            if discr > 0:
+                print("Discriminant is strictly positive, the two solutions are:")
+                x1 = (-dic[1] + discr**(1/2)) / (2 * dic[2])
+                if VERBOSE and check_dot(x1):
+                    fraction = x1.as_integer_ratio()
+                    print(f"\033[34mIn irreducible fraction x1 = \033[31m{fraction[0]}/{fraction[1]}\033[0m")
+                x2 = (-dic[1] - discr**(1/2)) / (2 * dic[2])
+                if VERBOSE and check_dot(x2):
+                    fraction = x2.as_integer_ratio()
+                    print(f"\033[34mIn irreducible fraction x2 = \033[31m{fraction[0]}/{fraction[1]}\033[0m")
+                print("x1 = %.9g \nx2 = %.9g" % (x1, x2))
+            elif discr == 0:
+                print("Discriminant is 0, the one solutions are:")
+                x = -dic[1] / (2 * dic[2])
+                if VERBOSE and check_dot(x):
+                    fraction = x.as_integer_ratio()
+                    print(f"\033[34mIn irreducible fraction x2 = \033[31m{fraction[0]}/{fraction[1]}\033[0m")
+                print("x = %.9g" % x)
+            else:
+                print("Discriminant is strictly negative, no solutions.")
+    except Exception as e:
+        print(e, end='. ')
+        print("Input Error")
 
 if __name__ == "__main__":
     if len(sys.argv) == 2:
         core(sys.argv[1])
     elif len(sys.argv) == 3 and sys.argv[1] == "-v":
-        VERBOSE = False
+        VERBOSE = True
         core(sys.argv[2])
     else:
         print("Wrong number of arguments.")
+
+
